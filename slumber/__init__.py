@@ -93,6 +93,9 @@ class Resource(ResourceAttributesMixin, object):
             headers["content-type"] = serializer.get_content_type()
             if data is not None:
                 data = serializer.dumps(data)
+        
+        if 'headers' in params:
+            headers.update(params.pop('headers'))
 
         resp = self._store["session"].request(method, url, data=data, params=params, files=files, headers=headers)
 
